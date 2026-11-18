@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HEARME — Сенімді диалог</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="privacy">
+        <span class="privacy-mark" aria-hidden="true"></span>
+        <span data-i18n="confidentiality"></span>
+      </div>
+
+      <div class="top-controls">
+        <label class="field">
+          <span data-i18n="languageLabel"></span>
+          <select id="language">
+            <option value="ru">Русский</option>
+            <option value="en">English</option>
+          </select>
+        </label>
+        <label class="field">
+          <span data-i18n="providerLabel"></span>
+          <select id="provider">
+            <option value="ollama">Ollama (local)</option>
+            <option value="cloud">Cloud API</option>
+            <option value="mock">Mock (demo)</option>
+          </select>
+        </label>
+        <label class="field">
+          <span data-i18n="voiceLabel"></span>
+          <select id="voice"></select>
+        </label>
+        <button id="stopSpeech" class="ghost small" type="button" data-i18n="stopVoice" hidden></button>
+        <button id="clear" class="ghost small" type="button" data-i18n="clearHistory"></button>
+      </div>
+
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-text" data-i18n="logoText"></span>
+      </div>
+    </header>
+
+    <main>
+      <section id="setup" class="setup">
+        <div class="hero">
+          <p class="eyebrow" data-i18n="heroEyebrow"></p>
+          <h1 data-i18n="welcome"></h1>
+          <p class="subtitle" data-i18n="chooseHint"></p>
+        </div>
+
+        <div class="how">
+          <h2 data-i18n="howTitle"></h2>
+          <div class="steps">
+            <article class="step">
+              <span class="step-number">01</span>
+              <h3 data-i18n="step1Title"></h3>
+              <p data-i18n="step1Text"></p>
+            </article>
+            <article class="step">
+              <span class="step-number">02</span>
+              <h3 data-i18n="step2Title"></h3>
+              <p data-i18n="step2Text"></p>
+            </article>
+            <article class="step">
+              <span class="step-number">03</span>
+              <h3 data-i18n="step3Title"></h3>
+              <p data-i18n="step3Text"></p>
+            </article>
+          </div>
+        </div>
+
+        <div class="selection">
+          <h2 data-i18n="chooseCharacter"></h2>
+          <div class="characters">
+            <button class="character" type="button" data-character="girl">
+              <div class="character-portrait portrait-girl">
+                <svg viewBox="0 0 120 120" aria-hidden="true">
+                  <circle cx="60" cy="60" r="58" fill="rgba(255,255,255,.18)"></circle>
+                  <circle cx="60" cy="47" r="22" fill="currentColor"></circle>
+                  <path d="M22 108c3-22 18-34 38-34s35 12 38 34" fill="currentColor"></path>
+                  <path d="M36 44c2-18 12-27 24-27s22 9 24 27c-8-8-16-11-24-11s-16 3-24 11Z" fill="rgba(35,33,35,.2)"></path>
+                </svg>
+              </div>
+              <div class="char-name" data-i18n="girlName"></div>
+              <div class="char-desc" data-i18n="girlDesc"></div>
+            </button>
+            <button class="character" type="button" data-character="boy">
+              <div class="character-portrait portrait-boy">
+                <svg viewBox="0 0 120 120" aria-hidden="true">
+                  <circle cx="60" cy="60" r="58" fill="rgba(255,255,255,.18)"></circle>
+                  <circle cx="60" cy="47" r="22" fill="currentColor"></circle>
+                  <path d="M22 108c3-22 18-34 38-34s35 12 38 34" fill="currentColor"></path>
+                  <path d="M36 42c3-15 12-23 24-23s21 8 24 23c-7-10-15-13-24-13S43 32 36 42Z" fill="rgba(35,33,35,.2)"></path>
+                </svg>
+              </div>
+              <div class="char-name" data-i18n="boyName"></div>
+              <div class="char-desc" data-i18n="boyDesc"></div>
+            </button>
+          </div>
+          <p id="providerNotice" class="notice"></p>
+          <p class="disclaimer" data-i18n="disclaimer"></p>
+          <button id="start" class="primary" type="button" data-i18n="startChat" disabled></button>
+        </div>
+      </section>
+
+      <section id="chat" class="chat" hidden>
+        <aside class="companion-panel">
+          <div class="portrait portrait-girl active" data-portrait="girl">
+            <svg viewBox="0 0 120 120" aria-hidden="true">
+              <circle cx="60" cy="60" r="58" fill="rgba(255,255,255,.14)"></circle>
+              <circle cx="60" cy="47" r="22" fill="currentColor"></circle>
+              <path d="M22 108c3-22 18-34 38-34s35 12 38 34" fill="currentColor"></path>
+              <path d="M36 44c2-18 12-27 24-27s22 9 24 27c-8-8-16-11-24-11s-16 3-24 11Z" fill="rgba(35,33,35,.22)"></path>
+            </svg>
+          </div>
+          <div class="portrait portrait-boy" data-portrait="boy">
+            <svg viewBox="0 0 120 120" aria-hidden="true">
+              <circle cx="60" cy="60" r="58" fill="rgba(255,255,255,.14)"></circle>
+              <circle cx="60" cy="47" r="22" fill="currentColor"></circle>
+              <path d="M22 108c3-22 18-34 38-34s35 12 38 34" fill="currentColor"></path>
+              <path d="M36 42c3-15 12-23 24-23s21 8 24 23c-7-10-15-13-24-13S43 32 36 42Z" fill="rgba(35,33,35,.22)"></path>
+            </svg>
+          </div>
+          <h2 id="companionName"></h2>
+          <p id="companionDesc"></p>
+          <p class="panel-quote" data-i18n="companionQuote"></p>
+          <button id="back" class="ghost light" type="button" data-i18n="changeCompanion"></button>
+        </aside>
+
+        <div class="chat-panel">
+          <div class="chat-head">
+            <div class="chat-title">
+              <span class="status-dot" aria-hidden="true"></span>
+              <span data-i18n="chatWith"></span>
+              <strong id="chatCompanionName"></strong>
+            </div>
+            <label class="voice-toggle">
+              <input type="checkbox" id="voiceReplies" checked>
+              <span data-i18n="voiceReplies"></span>
+            </label>
+          </div>
+          <div id="messages" class="messages" role="log" aria-live="polite"></div>
+          <div class="composer-row">
+            <button id="mic" class="mic" type="button" data-i18n="mic"></button>
+            <input id="messageInput" type="text" maxlength="4000" autocomplete="off" data-i18n-placeholder="inputPlaceholder">
+            <button id="send" class="primary" type="button" data-i18n="send"></button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
